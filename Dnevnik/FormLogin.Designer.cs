@@ -34,74 +34,88 @@
             lbPass = new Label();
             txtPass = new TextBox();
             btnLogin = new Button();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)Logo).BeginInit();
             SuspendLayout();
             // 
             // Logo
             // 
             Logo.Image = Properties.Resources.Logo;
-            Logo.Location = new Point(138, 12);
+            Logo.Location = new Point(141, 12);
             Logo.Name = "Logo";
             Logo.Size = new Size(100, 100);
             Logo.SizeMode = PictureBoxSizeMode.Zoom;
-            Logo.TabIndex = 0;
+            Logo.TabIndex = 7;
             Logo.TabStop = false;
-            Logo.Click += this.pictureBox1_Click;
             // 
             // lbLogin
             // 
-            lbLogin.AutoSize = true;
-            lbLogin.Location = new Point(156, 130);
+            lbLogin.Location = new Point(0, 0);
             lbLogin.Name = "lbLogin";
-            lbLogin.Size = new Size(64, 22);
-            lbLogin.TabIndex = 1;
-            lbLogin.Text = "Логин";
-            lbLogin.Click += this.lbLogin_Click;
+            lbLogin.Size = new Size(100, 23);
+            lbLogin.TabIndex = 6;
             // 
             // txtLogin
             // 
-            txtLogin.Location = new Point(63, 155);
+            txtLogin.Location = new Point(66, 155);
             txtLogin.Name = "txtLogin";
-            txtLogin.Size = new Size(250, 30);
+            txtLogin.Size = new Size(250, 26);
             txtLogin.TabIndex = 2;
             // 
             // lbPass
             // 
-            lbPass.AutoSize = true;
-            lbPass.Location = new Point(152, 199);
+            lbPass.Location = new Point(0, 0);
             lbPass.Name = "lbPass";
-            lbPass.Size = new Size(72, 22);
-            lbPass.TabIndex = 3;
-            lbPass.Text = "Пароль";
-            lbPass.Click += this.lbPass_Click;
+            lbPass.Size = new Size(100, 23);
+            lbPass.TabIndex = 5;
             // 
             // txtPass
             // 
-            txtPass.Location = new Point(63, 224);
+            txtPass.Location = new Point(66, 220);
             txtPass.Name = "txtPass";
-            txtPass.Size = new Size(250, 30);
+            txtPass.Size = new Size(250, 26);
             txtPass.TabIndex = 4;
             txtPass.UseSystemPasswordChar = true;
             txtPass.TextChanged += txtPass_TextChanged;
             // 
             // btnLogin
             // 
-            btnLogin.BackColor = Color.DeepSkyBlue;
+            btnLogin.BackColor = Color.DodgerBlue;
             btnLogin.FlatStyle = FlatStyle.Flat;
-            btnLogin.Location = new Point(63, 275);
+            btnLogin.Location = new Point(66, 252);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(250, 45);
-            btnLogin.TabIndex = 5;
+            btnLogin.Size = new Size(250, 40);
+            btnLogin.TabIndex = 0;
             btnLogin.Text = "Войти";
             btnLogin.UseVisualStyleBackColor = false;
-            btnLogin.Click += this.btnLogin_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(165, 133);
+            label1.Name = "label1";
+            label1.Size = new Size(52, 19);
+            label1.TabIndex = 8;
+            label1.Text = "Логин";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(159, 198);
+            label2.Name = "label2";
+            label2.Size = new Size(58, 19);
+            label2.TabIndex = 9;
+            label2.Text = "Пароль";
             // 
             // FormLogin
             // 
-            AutoScaleDimensions = new SizeF(11F, 22F);
+            AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(382, 353);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(btnLogin);
             Controls.Add(txtPass);
             Controls.Add(lbPass);
@@ -129,5 +143,7 @@
         private Label lbPass;
         private TextBox txtPass;
         private Button btnLogin;
+        private Label label1;
+        private Label label2;
     }
 }
