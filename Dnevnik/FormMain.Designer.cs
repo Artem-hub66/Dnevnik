@@ -29,20 +29,26 @@
         private void InitializeComponent()
         {
             pnLogoMain = new Panel();
-            pbLogoMain = new PictureBox();
-            btnExit = new Button();
             lbUserName = new Label();
+            btnExit = new Button();
+            pbLogoMain = new PictureBox();
             pnNavMain = new Panel();
-            btnPageMain = new Button();
             btnProfileMain = new Button();
+            btnPageMain = new Button();
             pnScheduleMain = new Panel();
-            lbScheduleMain = new Label();
+            dgvScheduleMain = new DataGridView();
             comboBoxDateMain = new ComboBox();
-            flpScheduleMain = new FlowLayoutPanel();
+            lbScheduleMain = new Label();
+            pnQuarterMain = new Panel();
+            comboBoxQuarterMain = new ComboBox();
+            dgvGradesMain = new DataGridView();
             pnLogoMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogoMain).BeginInit();
             pnNavMain.SuspendLayout();
             pnScheduleMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvScheduleMain).BeginInit();
+            pnQuarterMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvGradesMain).BeginInit();
             SuspendLayout();
             // 
             // pnLogoMain
@@ -58,16 +64,15 @@
             pnLogoMain.Size = new Size(1117, 79);
             pnLogoMain.TabIndex = 0;
             // 
-            // pbLogoMain
+            // lbUserName
             // 
-            pbLogoMain.Dock = DockStyle.Left;
-            pbLogoMain.Image = Properties.Resources.LogoMain;
-            pbLogoMain.Location = new Point(10, 10);
-            pbLogoMain.Name = "pbLogoMain";
-            pbLogoMain.Size = new Size(160, 59);
-            pbLogoMain.SizeMode = PictureBoxSizeMode.Zoom;
-            pbLogoMain.TabIndex = 1;
-            pbLogoMain.TabStop = false;
+            lbUserName.AutoSize = true;
+            lbUserName.Dock = DockStyle.Right;
+            lbUserName.Location = new Point(959, 10);
+            lbUserName.Name = "lbUserName";
+            lbUserName.Size = new Size(45, 19);
+            lbUserName.TabIndex = 3;
+            lbUserName.Text = "label1";
             // 
             // btnExit
             // 
@@ -82,16 +87,18 @@
             btnExit.TabIndex = 2;
             btnExit.Text = "Выход";
             btnExit.UseVisualStyleBackColor = false;
+            btnExit.Click += BtnExit_Click;
             // 
-            // lbUserName
+            // pbLogoMain
             // 
-            lbUserName.AutoSize = true;
-            lbUserName.Dock = DockStyle.Right;
-            lbUserName.Location = new Point(959, 10);
-            lbUserName.Name = "lbUserName";
-            lbUserName.Size = new Size(45, 19);
-            lbUserName.TabIndex = 3;
-            lbUserName.Text = "label1";
+            pbLogoMain.Dock = DockStyle.Left;
+            pbLogoMain.Image = Properties.Resources.LogoMain;
+            pbLogoMain.Location = new Point(10, 10);
+            pbLogoMain.Name = "pbLogoMain";
+            pbLogoMain.Size = new Size(160, 59);
+            pbLogoMain.SizeMode = PictureBoxSizeMode.Zoom;
+            pbLogoMain.TabIndex = 1;
+            pbLogoMain.TabStop = false;
             // 
             // pnNavMain
             // 
@@ -105,20 +112,6 @@
             pnNavMain.Padding = new Padding(10);
             pnNavMain.Size = new Size(1117, 67);
             pnNavMain.TabIndex = 1;
-            // 
-            // btnPageMain
-            // 
-            btnPageMain.Dock = DockStyle.Left;
-            btnPageMain.FlatAppearance.BorderSize = 0;
-            btnPageMain.FlatStyle = FlatStyle.Flat;
-            btnPageMain.ForeColor = Color.White;
-            btnPageMain.Location = new Point(10, 10);
-            btnPageMain.Margin = new Padding(10);
-            btnPageMain.Name = "btnPageMain";
-            btnPageMain.Size = new Size(126, 47);
-            btnPageMain.TabIndex = 0;
-            btnPageMain.Text = "Моя страница";
-            btnPageMain.UseVisualStyleBackColor = true;
             // 
             // btnProfileMain
             // 
@@ -134,9 +127,23 @@
             btnProfileMain.Text = "Профиль";
             btnProfileMain.UseVisualStyleBackColor = true;
             // 
+            // btnPageMain
+            // 
+            btnPageMain.Dock = DockStyle.Left;
+            btnPageMain.FlatAppearance.BorderSize = 0;
+            btnPageMain.FlatStyle = FlatStyle.Flat;
+            btnPageMain.ForeColor = Color.White;
+            btnPageMain.Location = new Point(10, 10);
+            btnPageMain.Margin = new Padding(10);
+            btnPageMain.Name = "btnPageMain";
+            btnPageMain.Size = new Size(126, 47);
+            btnPageMain.TabIndex = 0;
+            btnPageMain.Text = "Моя страница";
+            btnPageMain.UseVisualStyleBackColor = true;
+            // 
             // pnScheduleMain
             // 
-            pnScheduleMain.Controls.Add(flpScheduleMain);
+            pnScheduleMain.Controls.Add(dgvScheduleMain);
             pnScheduleMain.Controls.Add(comboBoxDateMain);
             pnScheduleMain.Controls.Add(lbScheduleMain);
             pnScheduleMain.Dock = DockStyle.Right;
@@ -145,6 +152,24 @@
             pnScheduleMain.Padding = new Padding(10);
             pnScheduleMain.Size = new Size(270, 544);
             pnScheduleMain.TabIndex = 2;
+            // 
+            // dgvScheduleMain
+            // 
+            dgvScheduleMain.BackgroundColor = Color.White;
+            dgvScheduleMain.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvScheduleMain.Dock = DockStyle.Bottom;
+            dgvScheduleMain.Location = new Point(10, 78);
+            dgvScheduleMain.Name = "dgvScheduleMain";
+            dgvScheduleMain.Size = new Size(250, 456);
+            dgvScheduleMain.TabIndex = 3;
+            // 
+            // comboBoxDateMain
+            // 
+            comboBoxDateMain.FormattingEnabled = true;
+            comboBoxDateMain.Location = new Point(10, 42);
+            comboBoxDateMain.Name = "comboBoxDateMain";
+            comboBoxDateMain.Size = new Size(250, 27);
+            comboBoxDateMain.TabIndex = 1;
             // 
             // lbScheduleMain
             // 
@@ -155,21 +180,35 @@
             lbScheduleMain.TabIndex = 0;
             lbScheduleMain.Text = "Расписание";
             // 
-            // comboBoxDateMain
+            // pnQuarterMain
             // 
-            comboBoxDateMain.FormattingEnabled = true;
-            comboBoxDateMain.Location = new Point(10, 42);
-            comboBoxDateMain.Name = "comboBoxDateMain";
-            comboBoxDateMain.Size = new Size(250, 27);
-            comboBoxDateMain.TabIndex = 1;
+            pnQuarterMain.Controls.Add(comboBoxQuarterMain);
+            pnQuarterMain.Dock = DockStyle.Top;
+            pnQuarterMain.Location = new Point(10, 156);
+            pnQuarterMain.Margin = new Padding(10);
+            pnQuarterMain.Name = "pnQuarterMain";
+            pnQuarterMain.Padding = new Padding(10);
+            pnQuarterMain.Size = new Size(847, 55);
+            pnQuarterMain.TabIndex = 4;
             // 
-            // flpScheduleMain
+            // comboBoxQuarterMain
             // 
-            flpScheduleMain.Location = new Point(10, 75);
-            flpScheduleMain.Name = "flpScheduleMain";
-            flpScheduleMain.Padding = new Padding(10);
-            flpScheduleMain.Size = new Size(250, 456);
-            flpScheduleMain.TabIndex = 2;
+            comboBoxQuarterMain.FormattingEnabled = true;
+            comboBoxQuarterMain.Location = new Point(10, 13);
+            comboBoxQuarterMain.Name = "comboBoxQuarterMain";
+            comboBoxQuarterMain.Size = new Size(160, 27);
+            comboBoxQuarterMain.TabIndex = 0;
+            // 
+            // dgvGradesMain
+            // 
+            dgvGradesMain.BackgroundColor = Color.White;
+            dgvGradesMain.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvGradesMain.Dock = DockStyle.Bottom;
+            dgvGradesMain.Location = new Point(10, 224);
+            dgvGradesMain.Margin = new Padding(10);
+            dgvGradesMain.Name = "dgvGradesMain";
+            dgvGradesMain.Size = new Size(847, 476);
+            dgvGradesMain.TabIndex = 5;
             // 
             // FormMain
             // 
@@ -177,11 +216,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1137, 710);
+            Controls.Add(dgvGradesMain);
+            Controls.Add(pnQuarterMain);
             Controls.Add(pnScheduleMain);
             Controls.Add(pnNavMain);
             Controls.Add(pnLogoMain);
             Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "FormMain";
             Padding = new Padding(10);
             StartPosition = FormStartPosition.CenterScreen;
@@ -192,6 +233,9 @@
             pnNavMain.ResumeLayout(false);
             pnScheduleMain.ResumeLayout(false);
             pnScheduleMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvScheduleMain).EndInit();
+            pnQuarterMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvGradesMain).EndInit();
             ResumeLayout(false);
         }
 
@@ -207,6 +251,10 @@
         private Panel pnScheduleMain;
         private ComboBox comboBoxDateMain;
         private Label lbScheduleMain;
-        private FlowLayoutPanel flpScheduleMain;
+        private DataGridView dgvScheduleMain;
+        private DataGridView dgvRatingsMain;
+        private Panel pnQuarterMain;
+        private ComboBox comboBoxQuarterMain;
+        private DataGridView dgvGradesMain;
     }
 }

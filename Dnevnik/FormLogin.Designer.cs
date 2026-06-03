@@ -75,9 +75,8 @@
             txtPass.Location = new Point(66, 220);
             txtPass.Name = "txtPass";
             txtPass.Size = new Size(250, 26);
-            txtPass.TabIndex = 4;
+            txtPass.TabIndex = 10;
             txtPass.UseSystemPasswordChar = true;
-            txtPass.TextChanged += txtPass_TextChanged;
             // 
             // btnLogin
             // 
@@ -89,6 +88,7 @@
             btnLogin.TabIndex = 0;
             btnLogin.Text = "Войти";
             btnLogin.UseVisualStyleBackColor = false;
+            btnLogin.Click += BtnLogin_Click;
             // 
             // label1
             // 
@@ -129,7 +129,6 @@
             Name = "FormLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Авторизация";
-            Load += FormLogin_Load;
             ((System.ComponentModel.ISupportInitialize)Logo).EndInit();
             ResumeLayout(false);
             PerformLayout();

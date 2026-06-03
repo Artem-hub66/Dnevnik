@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Dnevnik.Models;
+﻿namespace Dnevnik.Models;
 
 public partial class User
 {

@@ -2,16 +2,29 @@ namespace Dnevnik
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new FormLogin());
+            bool exitProgram = false;
+
+            while (!exitProgram)
+            {
+                using (var formLogin = new FormLogin())
+                {
+                    var result = formLogin.ShowDialog();
+
+                    if (result == DialogResult.OK && formLogin.CurrentUser != null)
+                    {
+                        using (var formMain = new FormMain(formLogin.CurrentUser))
+                        {
+                            formMain.ShowDialog();  
+                        }
+                    }
+                    else
+                    {
+                        exitProgram = true;
+                    }
+                }
+            }
         }
     }
 }

@@ -1,18 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using Dnevnik.Models;
 
 namespace Dnevnik
 {
     public partial class FormMain : Form
     {
-        public FormMain()
+        public User CurrentUser { get; private set; }
+
+        public FormMain(User user)
         {
             InitializeComponent();
+
+
+
+            CurrentUser = user;
+
+            lbUserName.Text = CurrentUser.FullName;
+        }
+
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
