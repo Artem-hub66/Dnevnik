@@ -198,6 +198,7 @@
             comboBoxQuarterMain.Name = "comboBoxQuarterMain";
             comboBoxQuarterMain.Size = new Size(160, 27);
             comboBoxQuarterMain.TabIndex = 0;
+            comboBoxQuarterMain.SelectedIndexChanged += comboBoxQuarterMain_SelectedIndexChanged;
             // 
             // dgvGradesMain
             // 

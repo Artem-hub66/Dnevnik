@@ -21,5 +21,10 @@ namespace Dnevnik
         {
             this.Close();
         }
+
+        private void comboBoxQuarterMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
