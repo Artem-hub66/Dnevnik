@@ -19,15 +19,13 @@ public partial class DnevnikContext : DbContext
 
     public virtual DbSet<AnnualGrade> AnnualGrades { get; set; }
 
-    public virtual DbSet<Attendance> Attendances { get; set; }
-
     public virtual DbSet<Class> Classes { get; set; }
 
     public virtual DbSet<Grade> Grades { get; set; }
 
     public virtual DbSet<Homework> Homeworks { get; set; }
 
-    public virtual DbSet<HomeworkSubmission> HomeworkSubmissions { get; set; }
+    public virtual DbSet<Quarter> Quarters { get; set; }
 
     public virtual DbSet<QuarterlyGrade> QuarterlyGrades { get; set; }
 
@@ -59,9 +57,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => e.YearName, "academic_years_year_name_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
             entity.Property(e => e.IsCurrent)
                 .HasDefaultValue(false)
@@ -78,82 +74,30 @@ public partial class DnevnikContext : DbContext
 
             entity.ToTable("annual_grades");
 
-            entity.HasIndex(e => new { e.StudentId, e.SubjectId, e.ClassId, e.AcademicYearId }, "annual_grades_student_id_subject_id_class_id_academic_year__key").IsUnique();
+            entity.HasIndex(e => new { e.StudentId, e.TeacherSubjectClassId, e.AcademicYearId }, "annual_grades_student_id_teacher_subject_class_id_academic__key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AcademicYearId).HasColumnName("academic_year_id");
             entity.Property(e => e.CalculatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("calculated_at");
-            entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.GradeValue).HasColumnName("grade_value");
             entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.SubjectId).HasColumnName("subject_id");
+            entity.Property(e => e.TeacherSubjectClassId).HasColumnName("teacher_subject_class_id");
 
             entity.HasOne(d => d.AcademicYear).WithMany(p => p.AnnualGrades)
                 .HasForeignKey(d => d.AcademicYearId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("annual_grades_academic_year_id_fkey");
 
-            entity.HasOne(d => d.Class).WithMany(p => p.AnnualGrades)
-                .HasForeignKey(d => d.ClassId)
-                .HasConstraintName("annual_grades_class_id_fkey");
-
             entity.HasOne(d => d.Student).WithMany(p => p.AnnualGrades)
                 .HasForeignKey(d => d.StudentId)
                 .HasConstraintName("annual_grades_student_id_fkey");
 
-            entity.HasOne(d => d.Subject).WithMany(p => p.AnnualGrades)
-                .HasForeignKey(d => d.SubjectId)
-                .HasConstraintName("annual_grades_subject_id_fkey");
-        });
-
-        modelBuilder.Entity<Attendance>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("attendance_pkey");
-
-            entity.ToTable("attendance");
-
-            entity.HasIndex(e => new { e.StudentId, e.ScheduleId, e.AttendanceDate }, "attendance_student_id_schedule_id_attendance_date_key").IsUnique();
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.AttendanceDate).HasColumnName("attendance_date");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("created_at");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.IsExcused)
-                .HasDefaultValue(false)
-                .HasColumnName("is_excused");
-            entity.Property(e => e.IsPresent)
-                .HasDefaultValue(true)
-                .HasColumnName("is_present");
-            entity.Property(e => e.Reason).HasColumnName("reason");
-            entity.Property(e => e.ScheduleId).HasColumnName("schedule_id");
-            entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("updated_at");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Attendances)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("attendance_created_by_fkey");
-
-            entity.HasOne(d => d.Schedule).WithMany(p => p.Attendances)
-                .HasForeignKey(d => d.ScheduleId)
-                .HasConstraintName("attendance_schedule_id_fkey");
-
-            entity.HasOne(d => d.Student).WithMany(p => p.Attendances)
-                .HasForeignKey(d => d.StudentId)
-                .HasConstraintName("attendance_student_id_fkey");
+            entity.HasOne(d => d.TeacherSubjectClass).WithMany(p => p.AnnualGrades)
+                .HasForeignKey(d => d.TeacherSubjectClassId)
+                .HasConstraintName("annual_grades_teacher_subject_class_id_fkey");
         });
 
         modelBuilder.Entity<Class>(entity =>
@@ -164,9 +108,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => e.ClassName, "classes_class_name_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AcademicYearId).HasColumnName("academic_year_id");
             entity.Property(e => e.ClassName)
                 .HasMaxLength(20)
@@ -190,38 +132,23 @@ public partial class DnevnikContext : DbContext
 
             entity.ToTable("grades");
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Comment).HasColumnName("comment");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
-            entity.Property(e => e.GradeDate).HasColumnName("grade_date");
             entity.Property(e => e.GradeValue).HasColumnName("grade_value");
-            entity.Property(e => e.GradeWeight)
-                .HasDefaultValue(1)
-                .HasColumnName("grade_weight");
-            entity.Property(e => e.LessonTopic)
-                .HasMaxLength(500)
-                .HasColumnName("lesson_topic");
-            entity.Property(e => e.Quarter).HasColumnName("quarter");
-            entity.Property(e => e.Semester).HasColumnName("semester");
+            entity.Property(e => e.ScheduleId).HasColumnName("schedule_id");
             entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.TeacherSubjectClassId).HasColumnName("teacher_subject_class_id");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Schedule).WithMany(p => p.Grades)
+                .HasForeignKey(d => d.ScheduleId)
+                .HasConstraintName("grades_schedule_id_fkey");
 
             entity.HasOne(d => d.Student).WithMany(p => p.Grades)
                 .HasForeignKey(d => d.StudentId)
                 .HasConstraintName("grades_student_id_fkey");
-
-            entity.HasOne(d => d.TeacherSubjectClass).WithMany(p => p.Grades)
-                .HasForeignKey(d => d.TeacherSubjectClassId)
-                .HasConstraintName("grades_teacher_subject_class_id_fkey");
         });
 
         modelBuilder.Entity<Homework>(entity =>
@@ -230,73 +157,42 @@ public partial class DnevnikContext : DbContext
 
             entity.ToTable("homework");
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.AssignmentDate).HasColumnName("assignment_date");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.DueDate).HasColumnName("due_date");
             entity.Property(e => e.TeacherSubjectClassId).HasColumnName("teacher_subject_class_id");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("updated_at");
 
             entity.HasOne(d => d.Class).WithMany(p => p.Homeworks)
                 .HasForeignKey(d => d.ClassId)
                 .HasConstraintName("homework_class_id_fkey");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Homeworks)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("homework_created_by_fkey");
 
             entity.HasOne(d => d.TeacherSubjectClass).WithMany(p => p.Homeworks)
                 .HasForeignKey(d => d.TeacherSubjectClassId)
                 .HasConstraintName("homework_teacher_subject_class_id_fkey");
         });
 
-        modelBuilder.Entity<HomeworkSubmission>(entity =>
+        modelBuilder.Entity<Quarter>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("homework_submissions_pkey");
+            entity.HasKey(e => e.Id).HasName("quarters_pkey");
 
-            entity.ToTable("homework_submissions");
+            entity.ToTable("quarters");
 
-            entity.HasIndex(e => new { e.HomeworkId, e.StudentId }, "homework_submissions_homework_id_student_id_key").IsUnique();
+            entity.HasIndex(e => new { e.AcademicYearId, e.QuarterNumber }, "quarters_academic_year_id_quarter_number_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.AttachmentPath)
-                .HasMaxLength(500)
-                .HasColumnName("attachment_path");
-            entity.Property(e => e.Grade).HasColumnName("grade");
-            entity.Property(e => e.HomeworkId).HasColumnName("homework_id");
-            entity.Property(e => e.Status)
-                .HasMaxLength(20)
-                .HasDefaultValueSql("'submitted'::character varying")
-                .HasColumnName("status");
-            entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.SubmissionDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("submission_date");
-            entity.Property(e => e.SubmissionText).HasColumnName("submission_text");
-            entity.Property(e => e.TeacherComment).HasColumnName("teacher_comment");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AcademicYearId).HasColumnName("academic_year_id");
+            entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.QuarterNumber).HasColumnName("quarter_number");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
 
-            entity.HasOne(d => d.Homework).WithMany(p => p.HomeworkSubmissions)
-                .HasForeignKey(d => d.HomeworkId)
-                .HasConstraintName("homework_submissions_homework_id_fkey");
-
-            entity.HasOne(d => d.Student).WithMany(p => p.HomeworkSubmissions)
-                .HasForeignKey(d => d.StudentId)
-                .HasConstraintName("homework_submissions_student_id_fkey");
+            entity.HasOne(d => d.AcademicYear).WithMany(p => p.Quarters)
+                .HasForeignKey(d => d.AcademicYearId)
+                .HasConstraintName("quarters_academic_year_id_fkey");
         });
 
         modelBuilder.Entity<QuarterlyGrade>(entity =>
@@ -305,38 +201,29 @@ public partial class DnevnikContext : DbContext
 
             entity.ToTable("quarterly_grades");
 
-            entity.HasIndex(e => new { e.StudentId, e.SubjectId, e.ClassId, e.AcademicYearId, e.Quarter }, "quarterly_grades_student_id_subject_id_class_id_academic_ye_key").IsUnique();
+            entity.HasIndex(e => new { e.StudentId, e.TeacherSubjectClassId, e.QuarterId }, "quarterly_grades_student_id_teacher_subject_class_id_quarte_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.AcademicYearId).HasColumnName("academic_year_id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CalculatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("calculated_at");
-            entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.GradeValue).HasColumnName("grade_value");
-            entity.Property(e => e.Quarter).HasColumnName("quarter");
+            entity.Property(e => e.QuarterId).HasColumnName("quarter_id");
             entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.SubjectId).HasColumnName("subject_id");
+            entity.Property(e => e.TeacherSubjectClassId).HasColumnName("teacher_subject_class_id");
 
-            entity.HasOne(d => d.AcademicYear).WithMany(p => p.QuarterlyGrades)
-                .HasForeignKey(d => d.AcademicYearId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("quarterly_grades_academic_year_id_fkey");
-
-            entity.HasOne(d => d.Class).WithMany(p => p.QuarterlyGrades)
-                .HasForeignKey(d => d.ClassId)
-                .HasConstraintName("quarterly_grades_class_id_fkey");
+            entity.HasOne(d => d.Quarter).WithMany(p => p.QuarterlyGrades)
+                .HasForeignKey(d => d.QuarterId)
+                .HasConstraintName("quarterly_grades_quarter_id_fkey");
 
             entity.HasOne(d => d.Student).WithMany(p => p.QuarterlyGrades)
                 .HasForeignKey(d => d.StudentId)
                 .HasConstraintName("quarterly_grades_student_id_fkey");
 
-            entity.HasOne(d => d.Subject).WithMany(p => p.QuarterlyGrades)
-                .HasForeignKey(d => d.SubjectId)
-                .HasConstraintName("quarterly_grades_subject_id_fkey");
+            entity.HasOne(d => d.TeacherSubjectClass).WithMany(p => p.QuarterlyGrades)
+                .HasForeignKey(d => d.TeacherSubjectClassId)
+                .HasConstraintName("quarterly_grades_teacher_subject_class_id_fkey");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -347,9 +234,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => e.Name, "roles_name_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
@@ -361,27 +246,28 @@ public partial class DnevnikContext : DbContext
 
             entity.ToTable("schedule");
 
-            entity.HasIndex(e => new { e.ClassId, e.DayOfWeek, e.LessonNumber, e.IsOddWeek }, "schedule_class_id_day_of_week_lesson_number_is_odd_week_key").IsUnique();
+            entity.HasIndex(e => new { e.TeacherSubjectClassId, e.ClassId, e.LessonDate }, "schedule_teacher_subject_class_id_class_id_lesson_date_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.Classroom)
                 .HasMaxLength(50)
                 .HasColumnName("classroom");
-            entity.Property(e => e.DayOfWeek).HasColumnName("day_of_week");
-            entity.Property(e => e.EndTime).HasColumnName("end_time");
-            entity.Property(e => e.IsOddWeek)
-                .HasDefaultValue(true)
-                .HasColumnName("is_odd_week");
-            entity.Property(e => e.LessonNumber).HasColumnName("lesson_number");
-            entity.Property(e => e.StartTime).HasColumnName("start_time");
+            entity.Property(e => e.LessonDate).HasColumnName("lesson_date");
+            entity.Property(e => e.LessonTopic)
+                .HasMaxLength(500)
+                .HasColumnName("lesson_topic");
+            entity.Property(e => e.QuarterId).HasColumnName("quarter_id");
             entity.Property(e => e.TeacherSubjectClassId).HasColumnName("teacher_subject_class_id");
 
             entity.HasOne(d => d.Class).WithMany(p => p.Schedules)
                 .HasForeignKey(d => d.ClassId)
                 .HasConstraintName("schedule_class_id_fkey");
+
+            entity.HasOne(d => d.Quarter).WithMany(p => p.Schedules)
+                .HasForeignKey(d => d.QuarterId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("schedule_quarter_id_fkey");
 
             entity.HasOne(d => d.TeacherSubjectClass).WithMany(p => p.Schedules)
                 .HasForeignKey(d => d.TeacherSubjectClassId)
@@ -396,9 +282,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => e.UserId, "students_user_id_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address).HasColumnName("address");
             entity.Property(e => e.BirthDate).HasColumnName("birth_date");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
@@ -431,9 +315,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => e.SubjectName, "subjects_subject_name_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ShortName)
                 .HasMaxLength(50)
                 .HasColumnName("short_name");
@@ -450,9 +332,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => e.UserId, "teachers_user_id_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.HireDate)
                 .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnName("hire_date");
@@ -474,9 +354,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => new { e.TeacherId, e.SubjectId, e.ClassId, e.AcademicYearId }, "teacher_subject_class_teacher_id_subject_id_class_id_academ_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AcademicYearId).HasColumnName("academic_year_id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.HoursPerWeek)
@@ -511,9 +389,7 @@ public partial class DnevnikContext : DbContext
 
             entity.HasIndex(e => e.Login, "users_login_key").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")

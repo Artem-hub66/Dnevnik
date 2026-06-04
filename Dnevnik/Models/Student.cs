@@ -23,13 +23,9 @@ public partial class Student
 
     public virtual ICollection<AnnualGrade> AnnualGrades { get; set; } = new List<AnnualGrade>();
 
-    public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
-
     public virtual Class Class { get; set; } = null!;
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
-
-    public virtual ICollection<HomeworkSubmission> HomeworkSubmissions { get; set; } = new List<HomeworkSubmission>();
 
     public virtual ICollection<QuarterlyGrade> QuarterlyGrades { get; set; } = new List<QuarterlyGrade>();
 

@@ -4,6 +4,9 @@ namespace Dnevnik
     {
         static void Main()
         {
+            string dbPath = "Dnevnik.db";
+            string sqlScriptPath = "Dnevnik.sql";
+
             bool exitProgram = false;
 
             while (!exitProgram)

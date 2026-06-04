@@ -11,9 +11,5 @@ public partial class Subject
 
     public string? ShortName { get; set; }
 
-    public virtual ICollection<AnnualGrade> AnnualGrades { get; set; } = new List<AnnualGrade>();
-
-    public virtual ICollection<QuarterlyGrade> QuarterlyGrades { get; set; } = new List<QuarterlyGrade>();
-
     public virtual ICollection<TeacherSubjectClass> TeacherSubjectClasses { get; set; } = new List<TeacherSubjectClass>();
 }

@@ -9,9 +9,7 @@ public partial class AnnualGrade
 
     public int StudentId { get; set; }
 
-    public int SubjectId { get; set; }
-
-    public int ClassId { get; set; }
+    public int TeacherSubjectClassId { get; set; }
 
     public int AcademicYearId { get; set; }
 
@@ -21,9 +19,7 @@ public partial class AnnualGrade
 
     public virtual AcademicYear AcademicYear { get; set; } = null!;
 
-    public virtual Class Class { get; set; } = null!;
-
     public virtual Student Student { get; set; } = null!;
 
-    public virtual Subject Subject { get; set; } = null!;
+    public virtual TeacherSubjectClass TeacherSubjectClass { get; set; } = null!;
 }

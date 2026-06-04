@@ -1,4 +1,7 @@
-﻿namespace Dnevnik.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Dnevnik.Models;
 
 public partial class User
 {
@@ -24,11 +27,7 @@ public partial class User
 
     public DateTime? LastLogin { get; set; }
 
-    public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
-
     public virtual ICollection<Class> Classes { get; set; } = new List<Class>();
-
-    public virtual ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
 
     public virtual Role Role { get; set; } = null!;
 

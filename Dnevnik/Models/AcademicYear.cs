@@ -19,7 +19,7 @@ public partial class AcademicYear
 
     public virtual ICollection<Class> Classes { get; set; } = new List<Class>();
 
-    public virtual ICollection<QuarterlyGrade> QuarterlyGrades { get; set; } = new List<QuarterlyGrade>();
+    public virtual ICollection<Quarter> Quarters { get; set; } = new List<Quarter>();
 
     public virtual ICollection<TeacherSubjectClass> TeacherSubjectClasses { get; set; } = new List<TeacherSubjectClass>();
 }

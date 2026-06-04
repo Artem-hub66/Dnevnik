@@ -10,10 +10,15 @@ namespace Dnevnik
         {
             InitializeComponent();
 
+            ComboBoxQuarterMain.Items.Add("1 Четверть");
+            ComboBoxQuarterMain.Items.Add("2 Четверть");
+            ComboBoxQuarterMain.Items.Add("3 Четверть");
+            ComboBoxQuarterMain.Items.Add("4 Четверть");
+            ComboBoxQuarterMain.Items.Add("Год");
 
+            //ComboBoxQuarterMain.SelectedIndex = 0;
 
             CurrentUser = user;
-
             lbUserName.Text = CurrentUser.FullName;
         }
 
@@ -22,9 +27,9 @@ namespace Dnevnik
             this.Close();
         }
 
-        private void comboBoxQuarterMain_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxQuarterMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            string selectedValue = ComboBoxQuarterMain.SelectedItem.ToString();
         }
     }
 }

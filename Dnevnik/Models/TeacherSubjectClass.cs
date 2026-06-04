@@ -19,11 +19,13 @@ public partial class TeacherSubjectClass
 
     public virtual AcademicYear AcademicYear { get; set; } = null!;
 
+    public virtual ICollection<AnnualGrade> AnnualGrades { get; set; } = new List<AnnualGrade>();
+
     public virtual Class Class { get; set; } = null!;
 
-    public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
-
     public virtual ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
+
+    public virtual ICollection<QuarterlyGrade> QuarterlyGrades { get; set; } = new List<QuarterlyGrade>();
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 

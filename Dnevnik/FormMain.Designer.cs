@@ -36,11 +36,11 @@
             btnProfileMain = new Button();
             btnPageMain = new Button();
             pnScheduleMain = new Panel();
+            dateTimePickerSheduleMain = new DateTimePicker();
             dgvScheduleMain = new DataGridView();
-            comboBoxDateMain = new ComboBox();
             lbScheduleMain = new Label();
             pnQuarterMain = new Panel();
-            comboBoxQuarterMain = new ComboBox();
+            ComboBoxQuarterMain = new ComboBox();
             dgvGradesMain = new DataGridView();
             pnLogoMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogoMain).BeginInit();
@@ -143,8 +143,8 @@
             // 
             // pnScheduleMain
             // 
+            pnScheduleMain.Controls.Add(dateTimePickerSheduleMain);
             pnScheduleMain.Controls.Add(dgvScheduleMain);
-            pnScheduleMain.Controls.Add(comboBoxDateMain);
             pnScheduleMain.Controls.Add(lbScheduleMain);
             pnScheduleMain.Dock = DockStyle.Right;
             pnScheduleMain.Location = new Point(857, 156);
@@ -152,6 +152,13 @@
             pnScheduleMain.Padding = new Padding(10);
             pnScheduleMain.Size = new Size(270, 544);
             pnScheduleMain.TabIndex = 2;
+            // 
+            // dateTimePickerSheduleMain
+            // 
+            dateTimePickerSheduleMain.Location = new Point(10, 46);
+            dateTimePickerSheduleMain.Name = "dateTimePickerSheduleMain";
+            dateTimePickerSheduleMain.Size = new Size(250, 26);
+            dateTimePickerSheduleMain.TabIndex = 4;
             // 
             // dgvScheduleMain
             // 
@@ -162,14 +169,6 @@
             dgvScheduleMain.Name = "dgvScheduleMain";
             dgvScheduleMain.Size = new Size(250, 456);
             dgvScheduleMain.TabIndex = 3;
-            // 
-            // comboBoxDateMain
-            // 
-            comboBoxDateMain.FormattingEnabled = true;
-            comboBoxDateMain.Location = new Point(10, 42);
-            comboBoxDateMain.Name = "comboBoxDateMain";
-            comboBoxDateMain.Size = new Size(250, 27);
-            comboBoxDateMain.TabIndex = 1;
             // 
             // lbScheduleMain
             // 
@@ -182,7 +181,7 @@
             // 
             // pnQuarterMain
             // 
-            pnQuarterMain.Controls.Add(comboBoxQuarterMain);
+            pnQuarterMain.Controls.Add(ComboBoxQuarterMain);
             pnQuarterMain.Dock = DockStyle.Top;
             pnQuarterMain.Location = new Point(10, 156);
             pnQuarterMain.Margin = new Padding(10);
@@ -191,14 +190,13 @@
             pnQuarterMain.Size = new Size(847, 55);
             pnQuarterMain.TabIndex = 4;
             // 
-            // comboBoxQuarterMain
+            // ComboBoxQuarterMain
             // 
-            comboBoxQuarterMain.FormattingEnabled = true;
-            comboBoxQuarterMain.Location = new Point(10, 13);
-            comboBoxQuarterMain.Name = "comboBoxQuarterMain";
-            comboBoxQuarterMain.Size = new Size(160, 27);
-            comboBoxQuarterMain.TabIndex = 0;
-            comboBoxQuarterMain.SelectedIndexChanged += comboBoxQuarterMain_SelectedIndexChanged;
+            ComboBoxQuarterMain.FormattingEnabled = true;
+            ComboBoxQuarterMain.Location = new Point(13, 13);
+            ComboBoxQuarterMain.Name = "ComboBoxQuarterMain";
+            ComboBoxQuarterMain.Size = new Size(157, 27);
+            ComboBoxQuarterMain.TabIndex = 0;
             // 
             // dgvGradesMain
             // 
@@ -250,12 +248,12 @@
         private Button btnPageMain;
         private Button btnProfileMain;
         private Panel pnScheduleMain;
-        private ComboBox comboBoxDateMain;
         private Label lbScheduleMain;
         private DataGridView dgvScheduleMain;
         private DataGridView dgvRatingsMain;
         private Panel pnQuarterMain;
-        private ComboBox comboBoxQuarterMain;
         private DataGridView dgvGradesMain;
+        private DateTimePicker dateTimePickerSheduleMain;
+        private ComboBox ComboBoxQuarterMain;
     }
 }
