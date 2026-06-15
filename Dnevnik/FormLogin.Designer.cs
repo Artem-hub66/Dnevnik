@@ -58,7 +58,7 @@
             // 
             // txtLogin
             // 
-            txtLogin.Location = new Point(66, 155);
+            txtLogin.Location = new Point(66, 169);
             txtLogin.Name = "txtLogin";
             txtLogin.Size = new Size(250, 26);
             txtLogin.TabIndex = 2;
@@ -72,7 +72,7 @@
             // 
             // txtPass
             // 
-            txtPass.Location = new Point(66, 220);
+            txtPass.Location = new Point(66, 230);
             txtPass.Name = "txtPass";
             txtPass.Size = new Size(250, 26);
             txtPass.TabIndex = 10;
@@ -82,7 +82,7 @@
             // 
             btnLogin.BackColor = Color.DodgerBlue;
             btnLogin.FlatStyle = FlatStyle.Flat;
-            btnLogin.Location = new Point(66, 252);
+            btnLogin.Location = new Point(66, 262);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(250, 40);
             btnLogin.TabIndex = 0;
@@ -107,6 +107,7 @@
             label2.Size = new Size(58, 19);
             label2.TabIndex = 9;
             label2.Text = "Пароль";
+            label2.Click += Label2_Click;
             // 
             // FormLogin
             // 

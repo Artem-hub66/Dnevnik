@@ -31,5 +31,12 @@ namespace Dnevnik
         {
             string selectedValue = ComboBoxQuarterMain.SelectedItem.ToString();
         }
+
+        private void BtnProfileMain_Click(object sender, EventArgs e)
+        {
+            FormProfile formProfile = new FormProfile();
+            formProfile.ShowDialog();
+            this.Close();
+        }
     }
 }

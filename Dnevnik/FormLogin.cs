@@ -22,7 +22,7 @@ namespace Dnevnik
 
             using (var db = new DnevnikContext())
             {
-                var user = db.Users.Where(w =>   w.PasswordHash == txtPass.Text && w.Login == txtLogin.Text).FirstOrDefault();
+                var user = db.Users.Where(w => w.PasswordHash == txtPass.Text && w.Login == txtLogin.Text).FirstOrDefault();
 
                 if (user != null)
                 {
@@ -35,6 +35,11 @@ namespace Dnevnik
                     MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void Label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
