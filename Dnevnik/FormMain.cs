@@ -34,9 +34,10 @@ namespace Dnevnik
 
         private void BtnProfileMain_Click(object sender, EventArgs e)
         {
-            FormProfile formProfile = new FormProfile();
+            this.Hide();
+            FormProfile formProfile = new FormProfile(CurrentUser); 
             formProfile.ShowDialog();
-            this.Close();
+            this.Show(); 
         }
     }
 }

@@ -30,9 +30,4 @@ public partial class Student
     public virtual ICollection<QuarterlyGrade> QuarterlyGrades { get; set; } = new List<QuarterlyGrade>();
 
     public virtual User User { get; set; } = null!;
-
-    internal IEnumerable<object> List()
-    {
-        throw new NotImplementedException();
-    }
 }

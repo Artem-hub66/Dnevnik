@@ -13,7 +13,7 @@ namespace Dnevnik
 
             var colInfo = new DataGridViewTextBoxColumn();
             colInfo.Name = "colInfo";
-            colInfo.FillWeight = 70;
+            colInfo.FillWeight = 100;
             colInfo.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             dgvUserProfile.Columns.AddRange(
@@ -33,21 +33,26 @@ namespace Dnevnik
             {
                 using (var db = new DnevnikContext())
                 {
-                    var orders = db.Users
+                    // Загружаем данные текущего пользователя с связанными сущностями
+                    var userWithDetails = db.Users
                         .Include(i => i.Teacher)
                         .Include(i => i.Student)
-                        .ToList();
+                        .ThenInclude(s => s.Class) // Добавляем Include для Class
+                        .FirstOrDefault(u => u.Id == CurrentUser.Id); // Загружаем только текущего пользователя
+
+                    if (userWithDetails == null)
+                    {
+                        MessageBox.Show("Пользователь не найден", "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     dgvUserProfile.SuspendLayout();
                     dgvUserProfile.Rows.Clear();
 
-                    foreach (var order in orders)
-                    {
-                        int rowIndex = dgvUserProfile.Rows.Add();
-                        var row = dgvUserProfile.Rows[rowIndex];
-
-                        row.Cells["colInfo"].Value = FormatUserProfileInfo(user);
-                    }
+                    int rowIndex = dgvUserProfile.Rows.Add();
+                    var row = dgvUserProfile.Rows[rowIndex];
+                    row.Cells["colInfo"].Value = FormatUserProfileInfo(userWithDetails);
 
                     dgvUserProfile.ResumeLayout();
                     dgvUserProfile.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
@@ -62,16 +67,29 @@ namespace Dnevnik
 
         private string FormatUserProfileInfo(User user)
         {
-            string info = "";
-            foreach (var userInfo in user.Student.ToList())
+            string info = $"Имя: {user.FullName}" + Environment.NewLine +
+                $"Email: {user.Email}" + Environment.NewLine +
+                $"Номер телефона: {user.Phone}" + Environment.NewLine;
+
+            // Проверяем, является ли пользователь студентом
+            if (user.Student != null)
             {
-                info = info + " " + userInfo.Student.FullName;
+                info += $"Класс: {user.Student.Class?.ClassName ?? "Не указан"}" + Environment.NewLine;
             }
 
-            return $"Имя: {user.FullName}" + Environment.NewLine +
-                $"Email: {user.Email}" + Environment.NewLine +
-                $"Номер телефона: {user.Phone}" + Environment.NewLine +
-                $"Класс: {user.Student.Class.ClassName}" + Environment.NewLine;
+            // Проверяем, является ли пользователь учителем
+            if (user.Teacher != null && user.Teacher.TeacherSubjectClasses != null && user.Teacher.TeacherSubjectClasses.Any())
+            {
+                // Вариант 1: Показать только первый предмет
+                var firstSubject = user.Teacher.TeacherSubjectClasses.FirstOrDefault();
+                info += $"Предмет: {firstSubject?.Subject?.SubjectName ?? "Не указан"}" + Environment.NewLine;
+            }
+            else if (user.Teacher != null)
+            {
+                info += $"Предмет: Не указан" + Environment.NewLine;
+            }
+
+            return info;
         }
 
         private void BtnExitProfile_Click(object sender, EventArgs e)

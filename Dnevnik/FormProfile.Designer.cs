@@ -33,16 +33,16 @@
             btnExitProfile = new Button();
             pbLogoProfile = new PictureBox();
             pnFillProfile = new Panel();
+            pndvgProfile = new Panel();
             dgvUserProfile = new DataGridView();
             pnUpdateProfile = new Panel();
-            pndvgProfile = new Panel();
             btnUpdateProfile = new Button();
             pnLogoProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogoProfile).BeginInit();
             pnFillProfile.SuspendLayout();
+            pndvgProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvUserProfile).BeginInit();
             pnUpdateProfile.SuspendLayout();
-            pndvgProfile.SuspendLayout();
             SuspendLayout();
             // 
             // pnLogoProfile
@@ -104,6 +104,17 @@
             pnFillProfile.Size = new Size(1117, 611);
             pnFillProfile.TabIndex = 2;
             // 
+            // pndvgProfile
+            // 
+            pndvgProfile.Controls.Add(dgvUserProfile);
+            pndvgProfile.Dock = DockStyle.Fill;
+            pndvgProfile.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            pndvgProfile.Location = new Point(0, 64);
+            pndvgProfile.Name = "pndvgProfile";
+            pndvgProfile.Padding = new Padding(10);
+            pndvgProfile.Size = new Size(1117, 547);
+            pndvgProfile.TabIndex = 2;
+            // 
             // dgvUserProfile
             // 
             dgvUserProfile.BackgroundColor = Color.White;
@@ -123,16 +134,6 @@
             pnUpdateProfile.Padding = new Padding(10);
             pnUpdateProfile.Size = new Size(1117, 64);
             pnUpdateProfile.TabIndex = 1;
-            // 
-            // pndvgProfile
-            // 
-            pndvgProfile.Controls.Add(dgvUserProfile);
-            pndvgProfile.Dock = DockStyle.Fill;
-            pndvgProfile.Location = new Point(0, 64);
-            pndvgProfile.Name = "pndvgProfile";
-            pndvgProfile.Padding = new Padding(10);
-            pndvgProfile.Size = new Size(1117, 547);
-            pndvgProfile.TabIndex = 2;
             // 
             // btnUpdateProfile
             // 
@@ -164,9 +165,9 @@
             pnLogoProfile.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogoProfile).EndInit();
             pnFillProfile.ResumeLayout(false);
+            pndvgProfile.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvUserProfile).EndInit();
             pnUpdateProfile.ResumeLayout(false);
-            pndvgProfile.ResumeLayout(false);
             ResumeLayout(false);
         }
 
